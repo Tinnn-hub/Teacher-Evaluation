@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teacher Evaluation</title>
+<link rel="manifest" href="manifest.json">
+
+<style>
+body{
+  font-family: Arial;
+  background:#f2f2f2;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.container{
+  background:white;
+  padding:30px;
+  border-radius:10px;
+  width:300px;
+  box-shadow:0 0 10px rgba(0,0,0,0.2);
+}
+
+input, select{
+  width:100%;
+  padding:10px;
+  margin:10px 0;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  background:#007BFF;
+  color:white;
+  border:none;
+  border-radius:5px;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<h3>Teacher Evaluation</h3>
+
+<input type="text" id="teacher" placeholder="Teacher Name">
+
+<input type="text" id="subject" placeholder="Subject">
+
+<label for="rating">Rating (1-5)</label>
+<select id="rating">
+  <option value="5">5 - Excellent</option>
+  <option value="4">4 - Very Good</option>
+  <option value="3">3 - Good</option>
+  <option value="2">2 - Fair</option>
+  <option value="1">1 - Poor</option>
+</select>
+
+<button onclick="save()">Submit</button>
+
+</div>
+
+<script>
+function save(){
+  let teacher = document.getElementById("teacher").value.trim()
+  let subject = document.getElementById("subject").value.trim()
+  let rating = document.getElementById("rating").value
+
+  if(!teacher || !subject){
+    alert("Please fill in all fields!")
+    return
+  }
+
+  let data = JSON.parse(localStorage.getItem("evaluations")) || []
+
+  data.push({
+    teacher: teacher,
+    subject: subject,
+    rating: rating
+  })
+
+  localStorage.setItem("evaluations", JSON.stringify(data))
+
+  alert("Feedback Saved!")
+
+  document.getElementById("teacher").value = ""
+  document.getElementById("subject").value = ""
+  document.getElementById("rating").value = "5"
+}
+
+// Register service worker
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.register("sw.js")
+}
+</script>
+
+</body>
+</html>
