@@ -88,7 +88,7 @@ function save(){
   document.getElementById("rating").value = "5"
 }
 
-// REGISTER SERVICE WORKER
+
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker.register("sw.js")
