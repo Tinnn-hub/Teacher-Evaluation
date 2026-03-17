@@ -3,8 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Teacher Evaluation</title>
+
 <link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#007BFF">
 
 <style>
 body{
@@ -44,11 +47,9 @@ button{
 <body>
 
 <div class="container">
-
 <h3>Teacher Evaluation</h3>
 
 <input type="text" id="teacher" placeholder="Teacher Name">
-
 <input type="text" id="subject" placeholder="Subject">
 
 <label for="rating">Rating (1-5)</label>
@@ -61,7 +62,6 @@ button{
 </select>
 
 <button onclick="save()">Submit</button>
-
 </div>
 
 <script>
@@ -77,11 +77,7 @@ function save(){
 
   let data = JSON.parse(localStorage.getItem("evaluations")) || []
 
-  data.push({
-    teacher: teacher,
-    subject: subject,
-    rating: rating
-  })
+  data.push({ teacher, subject, rating })
 
   localStorage.setItem("evaluations", JSON.stringify(data))
 
@@ -92,9 +88,13 @@ function save(){
   document.getElementById("rating").value = "5"
 }
 
-// Register service worker
-if("serviceWorker" in navigator){
-  navigator.serviceWorker.register("sw.js")
+// REGISTER SERVICE WORKER
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js")
+      .then(() => console.log("Service Worker Registered"))
+      .catch(err => console.log(err))
+  })
 }
 </script>
 
