@@ -9,6 +9,9 @@
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#007BFF">
 
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+
 <style>
 body{
   font-family: Arial;
@@ -17,6 +20,7 @@ body{
   justify-content:center;
   align-items:center;
   height:100vh;
+  margin:0;
 }
 
 .container{
@@ -88,12 +92,11 @@ function save(){
   document.getElementById("rating").value = "5"
 }
 
-
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js")
-      .then(() => console.log("Service Worker Registered"))
-      .catch(err => console.log(err))
+    navigator.serviceWorker.register("./sw.js")
+      .then(reg => console.log("SW registered:", reg))
+      .catch(err => console.log("SW error:", err))
   })
 }
 </script>
