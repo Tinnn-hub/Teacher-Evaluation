@@ -1,6 +1,6 @@
-const CACHE_NAME = "teacher-eval-v1";
+const CACHE_NAME = "teacher-eval-v2";
 
-const urlsToCache = [
+const ASSETS = [
   "./",
   "./index.html",
   "./manifest.json",
@@ -8,16 +8,32 @@ const urlsToCache = [
   "./icon-512.png"
 ];
 
+// INSTALL
 self.addEventListener("install", event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => cache.addAll(ASSETS))
   );
 });
 
+self.addEventListener("activate", event => {
+  event.waitUntil(
+    caches.keys().then(keys =>
+      Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
+          }
+        })
+      )
+    )
+  );
+});
+
+// FETCH
 self.addEventListener("fetch", event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
+      .then(res => res || fetch(event.request))
   );
 });
