@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Teacher Evaluation</title>
 
 
@@ -15,7 +14,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 <style>
-body{
+body {
   font-family: Arial;
   background:#f2f2f2;
   display:flex;
@@ -24,22 +23,19 @@ body{
   height:100vh;
   margin:0;
 }
-
-.container{
+.container {
   background:white;
   padding:30px;
   border-radius:10px;
   width:300px;
   box-shadow:0 0 10px rgba(0,0,0,0.2);
 }
-
-input, select{
+input, select {
   width:100%;
   padding:10px;
   margin:10px 0;
 }
-
-button{
+button {
   width:100%;
   padding:10px;
   background:#007BFF;
@@ -48,52 +44,45 @@ button{
   border-radius:5px;
 }
 </style>
-
 </head>
 <body>
 
 <div class="container">
-<h3>Teacher Evaluation</h3>
-
-<input type="text" id="teacher" placeholder="Teacher Name">
-<input type="text" id="subject" placeholder="Subject">
-
-<label>Rating (1-5)</label>
-<select id="rating">
-  <option value="5">5 - Excellent</option>
-  <option value="4">4 - Very Good</option>
-  <option value="3">3 - Good</option>
-  <option value="2">2 - Fair</option>
-  <option value="1">1 - Poor</option>
-</select>
-
-<button onclick="save()">Submit</button>
+  <h3>Teacher Evaluation</h3>
+  <input type="text" id="teacher" placeholder="Teacher Name">
+  <input type="text" id="subject" placeholder="Subject">
+  <label>Rating (1-5)</label>
+  <select id="rating">
+    <option value="5">5 - Excellent</option>
+    <option value="4">4 - Very Good</option>
+    <option value="3">3 - Good</option>
+    <option value="2">2 - Fair</option>
+    <option value="1">1 - Poor</option>
+  </select>
+  <button onclick="save()">Submit</button>
 </div>
 
 <script>
-
-function save(){
+function save() {
   const teacher = document.getElementById("teacher").value.trim();
   const subject = document.getElementById("subject").value.trim();
   const rating = document.getElementById("rating").value;
 
-  if(!teacher || !subject){
+  if (!teacher || !subject) {
     alert("Please fill in all fields!");
     return;
   }
 
   const data = JSON.parse(localStorage.getItem("evaluations")) || [];
-
   data.push({ teacher, subject, rating, date: new Date() });
-
   localStorage.setItem("evaluations", JSON.stringify(data));
 
   alert("Feedback Saved!");
-
   document.getElementById("teacher").value = "";
   document.getElementById("subject").value = "";
   document.getElementById("rating").value = "5";
 }
+
 
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
